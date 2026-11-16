@@ -209,7 +209,7 @@ const T = DATA.timeSpent, F = DATA.frequency, S = DATA.funnel, E = DATA.engageme
 const tRag = rag(T.value/T.target), fRag = rag(F.pct3Plus/F.target), sRag = rag(S.dailyVisits/S.target), eRag = rag(E.pct5Min/E.target);
 
 const quads = [
-  { pos:"tl", key:"lagging", title:"Lagging Metrics", rag:lagRag, body:`
+  { pos:"tl", key:"lagging", title:"Lagging Metrics", rag:lagRag, hidePill:true, body:`
       <div class="label">Total subscribers (Oct)</div>
       <div class="big">${fmt(last(L.subscribers))}</div>
       ${delta(last(L.subscribers),L.subscribers[0],"since Jan")}
@@ -257,7 +257,7 @@ function ctaHtml(q){
 const board = document.getElementById("board");
 board.innerHTML = quads.map(q=>`
   <section class="quad ${q.pos}" style="${ragVars(q.rag)}" aria-labelledby="h-${q.key}">
-    <div class="qhead"><h2 id="h-${q.key}">${q.title}</h2>${pill(q.rag)}</div>
+    <div class="qhead"><h2 id="h-${q.key}">${q.title}</h2>${q.hidePill?"":pill(q.rag)}</div>
     ${q.owner ? `<div class="eyebrow">${owner(q.owner)}</div>` : ""}
     ${q.body}
     ${ctaHtml(q)}
